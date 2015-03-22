@@ -1,3 +1,26 @@
+" Personal basic options
+" TEST 123 PLS WORK
+set number
+
+let mapleader = "¸"
+
+inoremap jk <esc>
+
+inoremap <left>		<nop>
+inoremap <right>	<nop>
+inoremap <up>		<nop>
+inoremap <down>		<nop>
+nnoremap <left>		<nop>
+nnoremap <right>	<nop>
+nnoremap <up>		<nop>
+nnoremap <down>		<nop>
+
+nnoremap <F3> :set hlsearch!<CR>u
+
+" Enable google calendar
+let g:calendar_google_task = 1
+
+
 
 " An example for a vimrc file.
 "
@@ -102,6 +125,24 @@ call pathogen#infect()
 call pathogen#helptags()
 
 
+"=====[ Highlight matches when jumping to next ]=============
+
+    " This rewires n and N to do the highlighing...
+    nnoremap <silent> n   n:call HLNext(0.4)<cr>
+    nnoremap <silent> N   N:call HLNext(0.4)<cr>
+
+    " OR ELSE just highlight the match in red...
+    function! HLNext (blinktime)
+        let [bufnum, lnum, col, off] = getpos('.')
+        let matchlen = strlen(matchstr(strpart(getline('.'),col-1),@/))
+        let target_pat = '\c\%#\%('.@/.'\)'
+        let ring = matchadd('WhiteOnRed', target_pat, 101)
+        redraw
+        exec 'sleep ' . float2nr(a:blinktime * 1000) . 'm'
+        call matchdelete(ring)
+        redraw
+    endfunction
+
 " Map Tab in Normal mode to Ctrl-^ (for switching windows)
 
 nmap <Tab> <C-^>
@@ -123,19 +164,30 @@ let b:syntastic_mode = "passive"
 
 
 " Drag visuals key mapping
-vmap  <expr>  <LEFT>   DVB_Drag('left') 
+vmap  <expr>  <LEFT>   DVB_Drag('left')
 vmap  <expr>  <RIGHT>  DVB_Drag('right')
-vmap  <expr>  <DOWN>   DVB_Drag('down') 
-vmap  <expr>  <UP>     DVB_Drag('up')   
-vmap  <expr>  D        DVB_Duplicate()  
+vmap  <expr>  <DOWN>   DVB_Drag('down')
+vmap  <expr>  <UP>     DVB_Drag('up')
+vmap  <expr>  D        DVB_Duplicate()
 
 " Remove any introduced trailing whitespace after moving...
-let g:DVB_TrimWS = 1                                       
+let g:DVB_TrimWS = 1
+
 
 
 " Quickly edit .vimrc
 nnoremap <leader>ev :split $MYVIMRC<cr>
-nnoremap <leader>sv :source $MYVIMRC<cr>:w<cr>:clo<cr>
+nnoremap <leader>sv :w<cr>:source $MYVIMRC<cr>:clo<cr>
+
+" Surround word in quotes
+nnoremap <leader>" viw<esc>a"<esc>hbi"<esc>lel
+vnoremap <leader>" <esc>a"<esc>`<i"<esc>lviw
 
 
+" Auto comment on more filetypes
+autocmd FileType javascript nnoremap <buffer> <localleader>c I//<esc>
+autocmd FileType python     nnoremap <buffer> <localleader>c I#<esc>
 
+" This is some tests for the commands I'm typing
+" so that I can edit them with the new commands
+" that I'm creating with a tutorial
