@@ -1,5 +1,4 @@
 " Personal basic options
-" TEST 123 PLS WORK
 set number
 
 let mapleader = "¸"
@@ -148,46 +147,73 @@ call pathogen#helptags()
 nmap <Tab> <C-^>
 
 
-" Syntastic recommended settings
-set statusline+=%#warningmsg#
-set statusline+=%{SyntasticStatuslineFlag()}
-set statusline+=%*
+" Syntastic recommended settings ------------------------------ {{{
+" set statusline+=%#warningmsg#
+" set statusline+=%{SyntasticStatuslineFlag()}
+" set statusline+=%*
 
-let g:syntastic_always_populate_loc_list = 1
-let g:syntastic_auto_loc_list = 1
-let g:syntastic_check_on_open = 1
-let g:syntastic_check_on_wq = 0
+" let g:syntastic_always_populate_loc_list = 1
+" let g:syntastic_auto_loc_list = 1
+" let g:syntastic_check_on_open = 1
+" let g:syntastic_check_on_wq = 0
 
 
 " Syntastic set passive mode
-let b:syntastic_mode = "passive"
+" let b:syntastic_mode = "passive"
+" }}}
+
+" Drag visuals key mapping ------------------------------ {{{
+augroup dvb
+	vmap  <expr>  <LEFT>   DVB_Drag('left')
+	vmap  <expr>  <RIGHT>  DVB_Drag('right')
+	vmap  <expr>  <DOWN>   DVB_Drag('down')
+	vmap  <expr>  <UP>     DVB_Drag('up')
+	vmap  <expr>  D        DVB_Duplicate()
+augroup END
+" }}}
+
+" Remove any introduced trailing whitespace after moving... ------------------------------ {{{
+augroup dvb
+	let g:DVB_TrimWS = 1
+augroup END
+" }}}
 
 
-" Drag visuals key mapping
-vmap  <expr>  <LEFT>   DVB_Drag('left')
-vmap  <expr>  <RIGHT>  DVB_Drag('right')
-vmap  <expr>  <DOWN>   DVB_Drag('down')
-vmap  <expr>  <UP>     DVB_Drag('up')
-vmap  <expr>  D        DVB_Duplicate()
 
-" Remove any introduced trailing whitespace after moving...
-let g:DVB_TrimWS = 1
-
-
-
-" Quickly edit .vimrc
+" Quickly edit .vimrc ------------------------------ {{{
+augroup vimrc
 nnoremap <leader>ev :split $MYVIMRC<cr>
 nnoremap <leader>sv :w<cr>:source $MYVIMRC<cr>:clo<cr>
+augroup END
+" }}}
 
-" Surround word in quotes
-nnoremap <leader>" viw<esc>a"<esc>hbi"<esc>lel
-vnoremap <leader>" <esc>a"<esc>`<i"<esc>lviw
+" Surround word in quotes ------------------------------ {{{
+augroup quotes
+	nnoremap <leader>" viw<esc>a"<esc>hbi"<esc>lel
+	vnoremap <leader>" <esc>a"<esc>`<i"<esc>lviw
+augroup END
+" }}}
 
 
-" Auto comment on more filetypes
-autocmd FileType javascript nnoremap <buffer> <localleader>c I//<esc>
-autocmd FileType python     nnoremap <buffer> <localleader>c I#<esc>
 
 " This is some tests for the commands I'm typing
 " so that I can edit them with the new commands
 " that I'm creating with a tutorial
+
+
+" Markdown maps ------------------------------ {{{
+augroup filetype_markdown
+	onoremap ih :<c-u>execute "normal! ?^[-=]\\+$\r:nohlsearch\rkvg_"<cr>
+	onoremap ah :<c-u>execute "normal! ?^[-=]\\+$\r:nohlsearch\rg_vk0"<cr>
+augroup END
+" }}}
+
+" Vimscript file settings ----------------------- {{{
+augroup filetype_vim
+    autocmd!
+    autocmd FileType vim setlocal foldmethod=marker
+augroup END
+" }}}
+
+
+
