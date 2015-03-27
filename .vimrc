@@ -5,16 +5,16 @@ let mapleader = "¸"
 
 inoremap jk <esc>
 
-inoremap <left>		<nop>
-inoremap <right>	<nop>
-inoremap <up>		<nop>
-inoremap <down>		<nop>
-nnoremap <left>		<nop>
-nnoremap <right>	<nop>
-nnoremap <up>		<nop>
-nnoremap <down>		<nop>
+" inoremap <left>		<nop>
+" inoremap <right>	<nop>
+" inoremap <up>		<nop>
+" inoremap <down>		<nop>
+" nnoremap <left>		<nop>
+" nnoremap <right>	<nop>
+" nnoremap <up>		<nop>
+" nnoremap <down>		<nop>
 
-nnoremap <F3> :set hlsearch!<CR>u
+nnoremap <F3> :set hlsearch!<CR>
 
 " Enable google calendar
 let g:calendar_google_task = 1
@@ -144,7 +144,7 @@ call pathogen#helptags()
 
 " Map Tab in Normal mode to Ctrl-^ (for switching windows)
 
-nmap <Tab> <C-^>
+nnoremap <Tab> <C-^>
 
 
 " Syntastic recommended settings ------------------------------ {{{
@@ -162,6 +162,7 @@ nmap <Tab> <C-^>
 " let b:syntastic_mode = "passive"
 " }}}
 
+
 " Drag visuals key mapping ------------------------------ {{{
 augroup dvb
 	vmap  <expr>  <LEFT>   DVB_Drag('left')
@@ -172,12 +173,12 @@ augroup dvb
 augroup END
 " }}}
 
+
 " Remove any introduced trailing whitespace after moving... ------------------------------ {{{
 augroup dvb
 	let g:DVB_TrimWS = 1
 augroup END
 " }}}
-
 
 
 " Quickly edit .vimrc ------------------------------ {{{
@@ -187,18 +188,13 @@ nnoremap <leader>sv :w<cr>:source $MYVIMRC<cr>:clo<cr>
 augroup END
 " }}}
 
+
 " Surround word in quotes ------------------------------ {{{
 augroup quotes
 	nnoremap <leader>" viw<esc>a"<esc>hbi"<esc>lel
 	vnoremap <leader>" <esc>a"<esc>`<i"<esc>lviw
 augroup END
 " }}}
-
-
-
-" This is some tests for the commands I'm typing
-" so that I can edit them with the new commands
-" that I'm creating with a tutorial
 
 
 " Markdown maps ------------------------------ {{{
@@ -208,12 +204,27 @@ augroup filetype_markdown
 augroup END
 " }}}
 
+
 " Vimscript file settings ----------------------- {{{
 augroup filetype_vim
     autocmd!
     autocmd FileType vim setlocal foldmethod=marker
+    iabbrev autog " ------------------------------ {{{<cr>
+    		\augroup <cr>
+    		\augroup END<cr>
+    		\" }}}
 augroup END
 " }}}
 
 
+" Java handler ------------------------------ {{{
+augroup java
+augroup END
+" }}}
 
+
+" Python file settings ------------------------------ {{{
+augroup filetype_python
+	nnoremap <leader>r :w<cr>:Start python3 %<cr>
+augroup END
+" }}} 
